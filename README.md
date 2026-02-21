@@ -1,3 +1,4 @@
+
 # 🔐 User Management System API
 
 > **RBAC + Kafka + Audit Logging + JWT** — Spring Boot 3.5.11 · MySQL 8 · Apache Kafka · OAS 3.1
@@ -6,7 +7,7 @@ A production-ready User Management System with Role-Based Access Control, statel
 
 ---
 
-## 📋 Table of Contents
+##  Table of Contents 
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
@@ -14,10 +15,10 @@ A production-ready User Management System with Role-Based Access Control, statel
 - [Project Structure](#project-structure)
 - [API Reference](#api-reference)
 - [Design Decisions](#design-decisions)
-- [Getting Started — Local Setup](#getting-started--local-setup)
-- [Getting Started — Docker Setup](#getting-started--docker-setup)
+- [Getting Started - Local Setup](#getting-started---local-setup)
+- [Getting Started - Docker Setup](#getting-started---docker-setup)  
 - [Environment Variables](#environment-variables)
-- [Database Schema & Migrations](#database-schema--migrations)
+- [Database Schema and Migrations](#database-schema-and-migrations)
 - [Default Admin Credentials](#default-admin-credentials)
 - [Kafka Events](#kafka-events)
 - [Swagger UI](#swagger-ui)
@@ -25,7 +26,7 @@ A production-ready User Management System with Role-Based Access Control, statel
 
 ---
 
-## ✅ Features
+## Features
 
 - User Registration with BCrypt password hashing and email uniqueness validation
 - JWT-based stateless login returning a signed Bearer token
@@ -46,7 +47,7 @@ A production-ready User Management System with Role-Based Access Control, statel
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack 
 
 | Layer | Technology |
 |---|---|
@@ -67,7 +68,7 @@ A production-ready User Management System with Role-Based Access Control, statel
 
 ---
 
-## 🏗 Architecture
+## Architecture  
 
 ```
 HTTP Request
@@ -92,7 +93,7 @@ Service → EventPublisherService → KafkaTemplate → user-events topic
 
 ---
 
-## 📁 Project Structure
+## Project Structure 
 
 ```
 src/
@@ -141,7 +142,7 @@ src/
 
 ---
 
-## 🔌 API Reference
+##  API Reference 
 
 Full interactive docs at `http://localhost:8080/swagger-ui/index.html`
 
@@ -211,7 +212,7 @@ Use the token on all secured endpoints: `Authorization: Bearer <token>`
 
 ---
 
-## 💡 Design Decisions
+##  Design Decisions 
 
 **Kafka configuration via environment** — `KafkaProducerConfig` and `KafkaConsumerConfig` both read `spring.kafka.bootstrap-servers` from `application.properties`, which resolves to `${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}`. This means the same binary works for local dev (`localhost:9092`) and Docker (`kafka:9092`) without any code change.
 
@@ -230,9 +231,7 @@ Use the token on all secured endpoints: `Authorization: Bearer <token>`
 **Health-check ordering** — `docker-compose.yml` uses `condition: service_healthy` for both MySQL and Kafka before starting the app. MySQL health check uses `mysqladmin ping`. Kafka health check uses `kafka-broker-api-versions`. This prevents the app from crashing on startup due to an unready broker.
 
 ---
-
-## 🚀 Getting Started — Local Setup
-
+## Getting Started - Local Setup
 ### Prerequisites
 
 - Java 21+
@@ -277,7 +276,7 @@ Swagger UI: `http://localhost:8080/swagger-ui/index.html`
 
 ---
 
-## 🐳 Getting Started — Docker Setup
+## Getting Started - Docker Setup
 
 ### Step 1 — Clone
 
@@ -326,7 +325,7 @@ docker rm mysql-db zookeeper kafka user-management-app 2>nul
 ```
 ---
 
-## ⚙️ Environment Variables
+##  Environment Variables 
 
 | Variable | Default (local) | Docker value | Description |
 |---|---|---|---|
@@ -345,7 +344,7 @@ Copy `.env.example` → `.env` for local overrides.
 
 ---
 
-## 🗄 Database Schema & Migrations
+## Database Schema and Migrations 
 
 Managed by **Flyway**. Migrations run automatically on startup.
 
@@ -363,7 +362,7 @@ Managed by **Flyway**. Migrations run automatically on startup.
 
 ---
 
-## 🔑 Default Admin Credentials
+## Default Admin Credentials  
 
 Seeded by `V2__insert_admin_role.sql`:
 
@@ -382,7 +381,7 @@ curl -X POST http://localhost:8080/api/users/login \
 
 ---
 
-## 📨 Kafka Events
+##  Kafka Events 
 
 All events are published to the **`user-events`** topic and consumed by `UserEventConsumer` in the same application (logged at INFO level).
 
@@ -417,7 +416,7 @@ kafka-console-consumer.sh \
 
 ---
 
-## 📖 Swagger UI
+##  Swagger UI 
 
 | URL | Description |
 |---|---|
@@ -433,7 +432,7 @@ kafka-console-consumer.sh \
 
 ---
 
-## 🧪 Running Tests
+##  Running Tests 
 
 ```bash
 # All tests (unit + integration via Testcontainers)
