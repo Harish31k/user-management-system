@@ -1,6 +1,6 @@
 # 🔐 User Management System API
 
-> **RBAC + Kafka + Audit Logging + JWT** — Spring Boot 3.x · MySQL 8 · Apache Kafka · OAS 3.1
+> **RBAC + Kafka + Audit Logging + JWT** — Spring Boot 3.5.11 · MySQL 8 · Apache Kafka · OAS 3.1
 
 A production-ready User Management System with Role-Based Access Control, stateless JWT authentication, Kafka event streaming, audit logging, Flyway migrations, and full Docker support.
 
@@ -50,7 +50,7 @@ A production-ready User Management System with Role-Based Access Control, statel
 
 | Layer | Technology |
 |---|---|
-| Framework | Spring Boot 3.x |
+| Framework | Spring Boot 3.5.11 |
 | Language | Java 21 |
 | Security | Spring Security + JWT (jjwt 0.12.7) + BCrypt |
 | Database | MySQL 8.3 + Spring Data JPA + Hibernate |
@@ -316,7 +316,14 @@ curl http://localhost:8080/swagger-ui/index.html
 docker-compose down           # stop containers
 docker-compose down -v        # stop + wipe database volume
 ```
+```
+watch it live from a new terminal:
+docker exec -it kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic user-events --from-beginning
 
+**** Clean up old containers **** dont forget to clean up **********
+docker-compose down
+docker rm mysql-db zookeeper kafka user-management-app 2>nul
+```
 ---
 
 ## ⚙️ Environment Variables
@@ -442,6 +449,3 @@ Integration tests use:
 
 ---
 
-## 📄 License
-
-MIT
